@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+
+<h2>Manage Your Car</h2>
+
+<form action="/car" method="POST">
+  <label for="brand">Brand:</label>
+  <select id="brand" name="brand" required>
+    <% brands.forEach(b => { %>
+      <option value="<%= b %>" <%= car && car.brand === b ? 'selected' : '' %>><%= b %></option>
+    <% }) %>
+  </select>
+
+  <label for="model">Model:</label>
+  <div id="model-container">
+    <select id="model" name="model" required>
+      <% if (car && modelsByBrand[car.brand]) { %>
+        <% modelsByBrand[car.brand].forEach(m => { %>
+          <option value="<%= m %>" <%= car.model === m ? 'selected' : '' %>><%= m %></option>
+        <% }) %>
+      <% } else if (car) { %>
+        <option value="<%= car.model %>" selected><%= car.model %></option>
+      <% } else { %>
+        <option value="">Select model</option>
+      <% } %>
+    </select>
+  </div>
+
+  <label for="year">Year:</label>
+  <input type="number" name="year" id="year" min="1980" max="2025" value="<%= car?.year || '' %>" required>
+
+  <label for="mileage">Mileage (km):</label>
+  <input type="number" name="mileage" id="mileage" value="<%= car?.mileage || '' %>" required>
+
+  <label for="lastMaintenance">Last Maintenance Date:</label>
+  <input type="date" name="lastMaintenance" id="lastMaintenance" value="<%= car?.lastMaintenance ? car.lastMaintenance.toISOString().split('T')[0] : '' %>" required>
+
+  <button type="submit">Save Car Info</button>
+</form>
+
+<script>
+  const modelsByBrand = <%- JSON.stringify(modelsByBrand) %>;
+
+  const brandSelect = document.getElementById('brand');
+  const modelContainer = document.getElementById('model-container');
+
+  function updateModelField(brand, selectedModel = '') {
+    modelContainer.innerHTML = '';
+
+    if (modelsByBrand[brand] && modelsByBrand[brand].length > 0) {
+      const select = document.createElement('select');
+      select.id = 'model';
+      select.name = 'model';
+      select.required = true;
+
+      modelsByBrand[brand].forEach(model => {
+        const option = document.createElement('option');
+        option.value = model;
+        option.textContent = model;
+        if (model === selectedModel) option.selected = true;
+        select.appendChild(option);
+      });
+
+      modelContainer.appendChild(select);
+    } else {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.id = 'model';
+      input.name = 'model';
+      input.placeholder = 'Enter model manually';
+      input.required = true;
+      input.value = selectedModel;
+      modelContainer.appendChild(input);
+    }
+  }
+
+  brandSelect.addEventListener('change', function () {
+    updateModelField(this.value);
+  });
+</script>
+
+<%- include('partials/footer') %>

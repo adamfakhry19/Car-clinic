@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<div class="layout-wrapper">
+  <main>
+    <h2>Welcome, <%= user.name %> </h2>
+
+    <% if (!car) { %>
+      <p style="text-align:center; margin: 10px 0;">
+        You haven’t added a car yet.
+      </p>
+      <div style="text-align:center;">
+        <a href="/car"><button>Add Your Car</button></a>
+      </div>
+    <% } else { %>
+      <section class="car-card">
+        <h3><%= car.brand %> <%= car.model %> (<%= car.year %>)</h3>
+        <p><strong>Mileage:</strong> <%= car.mileage.toLocaleString() %> km</p>
+        <p><strong>Last Maintenance:</strong> <%= car.lastMaintenance.toDateString() %></p>
+        <div class="card-actions">
+          <a href="/car"><button>Edit Car Info</button></a>
+          <a href="/diagnose"><button>Start New Diagnosis</button></a>
+        </div>
+      </section>
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</div>

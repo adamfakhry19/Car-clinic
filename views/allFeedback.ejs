@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<main>
+  <h2>All User Feedback</h2>
+
+  <% if (feedbacks.length === 0) { %>
+    <p>No feedback available yet.</p>
+  <% } else { %>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <% feedbacks.forEach(f => { %>
+        <div style="background: #f0f0f0; padding: 15px; border-radius: 8px;">
+          <p><strong>User:</strong> <%= f.userId?.name || 'Anonymous' %></p>
+          <p><strong>Rating:</strong> <%= f.rating %> ⭐</p>
+          <p><strong>Helpful:</strong> <%= f.helpful ? 'Yes' : 'No' %></p>
+          <% if (f.comment) { %>
+            <p><strong>Comment:</strong> <%= f.comment %></p>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

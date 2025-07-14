@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Clinic</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body >
+<% if (currentPath !== '/login' && currentPath !== '/register') { %>
+  <header>
+    <nav class="navbar">
+      <a href="/dashboard" class="logo">Car Clinic</a>
+      <ul class="nav-links">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/diagnose">Diagnose</a></li>
+        <li><a href="/car">Manage Car</a></li>
+        <li><a href="/feedback/all">Feedbacks</a></li>
+        <li><a href="/notifications">Notifications</a></li>
+        <li><a href="/about">Who We Are</a></li>
+        <li><a href="/logout" class="logout-btn">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+<% } %>
+<main>

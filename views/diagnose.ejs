@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<h2>Start a New Diagnosis</h2>
+
+<form action="/diagnose" method="POST">
+  <label for="symptoms">Describe the symptoms:</label>
+  <textarea name="symptoms" id="symptoms" rows="5" placeholder="e.g. Engine makes a knocking sound when accelerating" required></textarea>
+  <button type="submit">Diagnose</button>
+</form>
+
+<% if (result) { %>
+  <div class="result">
+    <h3>Diagnosis Result</h3>
+    <p><strong>Issue:</strong> <%= result.issue %></p>
+    <p><strong>Severity:</strong> <%= result.severity %></p>
+    <p><strong>Confidence:</strong> <%= result.confidence %></p>
+    <p><strong>Suggested Solution:</strong> <%= result.solution %></p>
+  </div>
+<% } %>
+
+<a href="/feedback">
+  <button style="margin-top: 20px;">Give Feedback</button>
+</a>
+
+<%- include('partials/footer') %>
